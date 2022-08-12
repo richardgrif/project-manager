@@ -30,7 +30,7 @@ export default function Home() {
         <p className='mt-10'>Free 7 day trial then just $19.99/m</p>
 
         <div className='mt-10'>
-          <a className='bg-black rounded text-white px-5 py-2' href='/api/auth/signin'>
+          <a className='bg-gray-600 rounded text-white px-5 py-2' href='/api/auth/signin'>
             Login
           </a>
         </div>

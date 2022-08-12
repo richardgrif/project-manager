@@ -20,8 +20,8 @@ a {
     color-scheme: light;
   }
   body {
-    color: black;
-    background: white;
+    color: white;
+    background: black;
   }
 }
 @tailwind base;
