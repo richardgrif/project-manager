@@ -4,6 +4,7 @@ import { useSession, getSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { getProjects } from 'lib/data'
+import NewTodo from 'components/NewTodo'
 
 export default function Dashboard({ projects }) {
   const router = useRouter()
@@ -67,18 +68,21 @@ export default function Dashboard({ projects }) {
                 }`}
               >Add</button>
             </form>
-            <div className='grid sm:grid-cols-2'>
-              {projects.map((project) => (
-                <div>
-                    <h2 className='mt-10 font-bold'>{project.name}</h2>
-                    <ol className='mt-4 list-inside list-decimal'>
-                        <li>To do 1</li>
-                        <li>To do 2</li>
-                        <li>To do 3</li>
-                    </ol>
-                </div>
-              ))}
-            </div>            
+            <div className='grid sm:grid-cols-2 ml-16'>
+            {projects.map((project, project_index) => (
+              <div key={project_index} className=''>
+                <h2 className='mt-10 font-bold'>{project.name}</h2>
+                <NewTodo project_id={project.id} />
+                <ol className='mt-4 '>
+                  {project.todos.map((todo, todo_index) => (
+                    <li key={todo_index}>
+                      <span>⬜️</span> {todo.name}
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            ))}
+          </div>            
         </div>
     </div>
   )
