@@ -71,7 +71,25 @@ export default function Dashboard({ projects }) {
             <div className='grid sm:grid-cols-2 ml-16'>
             {projects.map((project, project_index) => (
               <div key={project_index} className=''>
-                <h2 className='mt-10 font-bold'>{project.name}</h2>
+                <h2 className='mt-10 font-bold'>
+                  {project.name}{' '}
+                  <span 
+                    className='cursor-pointer'
+                    onClick={async (e) => {
+                      e.preventDefault()
+                      await fetch('/api/project', {
+                        body: JSON.stringify({
+                          id: project.id
+                        }),
+                        headers: {
+                          'Content-Type':'application/json'
+                        },
+                        method: 'DELETE'
+                      })
+                      router.reload()
+                    }}
+                  >🗑</span>
+                </h2>
                 <NewTodo project_id={project.id} />
                 <ol className='mt-4 '>
                   {project.todos.map((todo, todo_index) => (
@@ -96,7 +114,26 @@ export default function Dashboard({ projects }) {
                       {todo.done ? '✅' : '⬜️'}
                       </span>{' '}
                       <span className={`${todo.done ? 'line-through' : ''}`}>
-                        {todo.name}
+                        {todo.name}{' '}
+                        <span
+                          className='cursor-pointer'
+                          onClick={async (e) => {
+                            e.preventDefault()
+                            await fetch('/api/todo', {
+                              body: JSON.stringify({
+                                id: todo.id,
+                              }),
+                              headers: {
+                                'Content-Type': 'application/json',
+                              },
+                              method: 'DELETE',
+                            })
+
+                            router.reload()
+                          }}
+                        >
+                          🗑
+                        </span>
                       </span>
                     </li>
                   ))}
@@ -105,6 +142,19 @@ export default function Dashboard({ projects }) {
             ))}
           </div>            
         </div>
+        <p
+          className='text-center text-xs mt-20 hover:underline cursor-pointer'
+          onClick={async (e) => {
+            e.preventDefault()
+            await fetch('/api/cancel', {
+              method: 'POST',
+            })
+
+            router.reload()
+          }}
+        >
+          Cancel Your Subscription
+        </p>
     </div>
   )
 }
